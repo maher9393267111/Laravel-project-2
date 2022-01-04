@@ -46,22 +46,41 @@ Category
 <table class="table container">
   <thead>
     <tr>
-      <th scope="col">slNo</th>
-      <th scope="col">name</th>
-      <th scope="col">email</th>
-      <th scope="col">create at</th>
+      <th scope="col">sl no</th>
+      <th scope="col">category_name</th>
+      <th scope="col">category_id</th>
+      <th scope="col">created_at</th>
     </tr>
   </thead>
   <tbody>
 
+@php($i=1)
+
+@foreach($categories as $category)
 
     <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
+      <th scope="row">{{$i++}}</th>
+      <td>{{$category->category_name}}</td>
+      <td>{{$category->category_id}}</td>
 
+
+
+
+      <td>
+        @if($category->created_at == NULL)
+
+        <span class='text-danger'>no time itis Deleted</span>
+
+        @else
+
+        {{$category->created_at}};
+
+      @endif
+    </td>
+
+
+    </tr>
+    @endforeach
 
   </tbody>
 </table>
@@ -72,7 +91,7 @@ Category
 
 {{-- right  section start --}}
 
-<div class=" card border-dark  col-md-4" style="">
+<div class=" card border-dark  col-md-4" style="height:fit-content;">
 
 <div class="card-header">adda category</div>
 

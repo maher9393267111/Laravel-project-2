@@ -19,7 +19,13 @@ class CategoryController extends Controller
 public function Allcat(){
 
 
-return view('admin.category.index');
+// $categories = category::latest()->get();
+
+$categories =DB::table('categories')->latest()->get();
+
+
+
+return view('admin.category.index',compact('categories'));
 
 
 
@@ -52,16 +58,19 @@ public function Addcat(Request $request ){
 
 );
 
-// category::insert([
+category::insert([
 
-// 'category_name'=>$request->category_name,
+'category_name'=>$request->category_name,
 
-// 'user_id' =>Auth::user()->id,
+'user_id' =>Auth::user()->id,
 
-// 'created_at' =>Carbon::now(),
+'created_at' =>Carbon::now(),
 
 
-// ]);
+]);
+
+
+
 //-----------------------------------------------
 // $category =new category;
 
@@ -76,14 +85,14 @@ public function Addcat(Request $request ){
 //--------------------------------------------------------
 
 
-$data =array();
+// $data =array();
 
 
-$data['category_name']=$request->category_name;
+// $data['category_name']=$request->category_name;
 
-$data['user_id'] = Auth::user()->id;
+// $data['user_id'] = Auth::user()->id;
 
-DB::table('categories')->insert($data);
+// DB::table('categories')->insert($data);
 
 
 return Redirect()->back()->with('success','category is inserted  in database');
