@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\support\Carbon;
 
+use Illuminate\support\Facades\DB;
+
 use Auth;
 
 use App\Models\category;
@@ -60,17 +62,28 @@ public function Addcat(Request $request ){
 
 
 // ]);
-
-$category =new category;
-
-
-$category->category_name=$request->category_name;
+//-----------------------------------------------
+// $category =new category;
 
 
-$category->user_id =Auth::user()->id;
+// $category->category_name=$request->category_name;
 
-$category->save();
 
+// $category->user_id =Auth::user()->id;
+
+// $category->save();
+
+//--------------------------------------------------------
+
+
+$data =array();
+
+
+$data['category_name']=$request->category_name;
+
+$data['user_id'] = Auth::user()->id;
+
+DB::table('categories')->insert($data);
 
 
 return Redirect()->back()->with('success','category is inserted  in database');
