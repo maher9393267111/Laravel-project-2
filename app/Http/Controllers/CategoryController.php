@@ -19,9 +19,9 @@ class CategoryController extends Controller
 public function Allcat(){
 
 
-// $categories = category::latest()->get();
+ $categories = category::latest()->paginate(5);
 
-$categories =DB::table('categories')->latest()->get();
+// $categories =DB::table('categories')->latest()->paginate(5);
 
 
 

@@ -59,9 +59,12 @@ Category
 @foreach($categories as $category)
 
     <tr>
-      <th scope="row">{{$i++}}</th>
+
+        {{-- number of item  1,2,3,4...... --}}
+
+      <th scope="row">{{$categories->firstItem()+$loop->index}}</th>
       <td>{{$category->category_name}}</td>
-      <td>{{$category->category_id}}</td>
+      <td>{{$category->user_id}}</td>
 
 
 
@@ -84,6 +87,13 @@ Category
 
   </tbody>
 </table>
+
+
+{{-- paginate mthod --}}
+
+{{$categories->links()}}
+
+
 
 </div>
 
