@@ -54,44 +54,28 @@ Category
   </thead>
   <tbody>
 
-@php($i=1)
-
-@foreach($categories as $category)
-
+    @foreach($categories as $category)
     <tr>
 
-        {{-- number of item  1,2,3,4...... --}}
-
-      <th scope="row">{{$categories->firstItem()+$loop->index}}</th>
-      <td>{{$category->category_name}}</td>
-      <td>{{$category->user->name}}</td>
-
-
-
-
-      <td>
-        @if($category->created_at == NULL)
-
-        <span class='text-danger'>no time itis Deleted</span>
-
-        @else
-
-        {{$category->created_at}};
-
-      @endif
-    </td>
-
-
+        <th scope="row">{{ $categories->firstItem()+$loop->index }}</th>
+        <td>{{$category->category_name}}</td>
+        <td>{{$category->user->name}}</td>
+        <td>{{ Carbon\Carbon::parse($category->created_at)->diffForHumans()}}</td>
+        <td>
+          <a href="{{ url('category/edit/'.$category->id) }}" class="btn btn-info">Edit</a>
+          <a href="{{ url('category/softDelete/'.$category->id) }}" class="btn btn-danger">Delete</a>
+        </td>
     </tr>
-    @endforeach
-
-  </tbody>
+@endforeach
+</tbody>
 </table>
+{{ $categories->links() }}
+
 
 
 {{-- paginate mthod --}}
 
-{{$categories->links()}}
+
 
 
 
@@ -103,7 +87,7 @@ Category
 
 <div class=" card border-dark  col-md-4" style="height:fit-content;">
 
-<div class="card-header">adda category</div>
+<div class="card-header">add category</div>
 
 <div class="card-body">
 

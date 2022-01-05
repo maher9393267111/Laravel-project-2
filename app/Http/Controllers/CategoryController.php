@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\support\Carbon;
 
-use Illuminate\support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 
@@ -18,8 +18,15 @@ class CategoryController extends Controller
 
 public function Allcat(){
 
+// $categories=DB::table('categories')->join('users','categories.user_id','users.id')
+// ->select('categories.*','users.name')->latest()->paginate(5);
 
- $categories = category::latest()->paginate(5);
+
+
+
+
+
+$categories = Category::latest()->paginate(5);
 
 // $categories =DB::table('categories')->latest()->paginate(5);
 
@@ -102,6 +109,37 @@ return Redirect()->back()->with('success','category is inserted  in database');
 
     }
 
+
+    public function Edit($id){
+
+        $categories = category::find($id);
+
+
+return view('admin.category.edit',compact('categories'));
+
+
+
+    }
+
+    public function Update(Request $request, $id){
+
+        $update = category::find($id)->update([
+
+'category_name' =>$request->category_name,
+
+'user_id' =>Auth::user()->id
+
+
+        ]);
+
+        return Redirect()->route('all.category')->with('success','category is upated succsesfuly man');
+
+
+
+
+
+
+    }
 
 
 

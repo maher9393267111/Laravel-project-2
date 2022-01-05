@@ -37,3 +37,11 @@ Route::get('category/all',[CategoryController::class,'Allcat'])->name('all.categ
 
 
 Route::post('category/add',[CategoryController::class,'Addcat'])->name('store.category');
+
+
+
+Route::get('category/edit/{id}',[CategoryController::class,'Edit']);
+
+
+
+Route::post('category/update/{id}',[CategoryController::class,'Update']);

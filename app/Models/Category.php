@@ -15,12 +15,13 @@ class Category extends Model
         'user_id',
     ];
 
-    public function user(){
-
-return $this->hasOne(User::class,'id','user_id');
 
 
-    }
+
+
+public function user() {
+    return $this->hasOne(User::class, 'id', 'user_id');
+}
 
 
 }
