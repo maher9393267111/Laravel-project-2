@@ -8,6 +8,9 @@ use App\Models\User;
  use  App\Http\Controllers\CategoryController;
 
 
+ use  App\Http\Controllers\BrandController;
+
+
 // |--------------------------------------------------------------------------
 // | Web Routes
 // |--------------------------------------------------------------------------
@@ -57,3 +60,9 @@ Route::get('category/restore/{id}',[CategoryController::class,'Restore']);
 
 
 Route::get('category/delete/{id}',[CategoryController::class,'Delete']);
+
+
+Route::get('brand/all',[BrandController::class,'Allbrand'])->name('all.brand');
+
+
+Route::post('brand/add',[BrandController::class,'Storebrand'])->name('store.brand');
