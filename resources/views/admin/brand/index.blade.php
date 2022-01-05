@@ -46,7 +46,7 @@
                                     <th scope="row">{{ $brands->firstItem()+$loop->index }}</th>
                                     <td>{{$brand->brand_name}}</td>
                                     <td>
-                                      <img class='w-50 h-50'  src='{{ asset($brand->brand_image) }}' alt='brand logo' />
+                                      <img style="width:50px;height:50px;"  src='{{ asset($brand->brand_image) }}' alt='brand logo' />
                                     </td>
                                     <td>{{ Carbon\Carbon::parse($brand->created_at)->diffForHumans()}}</td>
                                     <td>
@@ -74,13 +74,13 @@
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" name="brand_name" id="name">
-                    @error('name')
+                    @error('brand_name')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>
                   <div class="form-group">
                     <input type="file" class="form-control" name="brand_image" id="logo">
-                    @error('logo')
+                    @error('brand_image')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                   </div>

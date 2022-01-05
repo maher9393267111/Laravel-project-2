@@ -79,40 +79,93 @@ public function Storebrand(Request $request){
 
 }
 
+public function Edit($id){
+
+    $brands = Brand::find($id);
 
 
-// public function add(Request $request)
-// {
-//     $request->validate([
-//         'brand_name' => 'required|unique:brands|min:4',
-//         'brand_image' => 'required|mimes:jpg,bmp,png'
-//     ]);
+return view('admin.brand.edit',compact('brands'));
 
-//     $brand = new Brand();
-//     $brand_image = $request->file('brand_image');
-//     if ($brand_image) {
-//         // without Intervention/image pacakge
-//         // $name_gen = hexdec(uniqid());
-//         // $img_ext = strtolower($brand_image->extension());
-//         // $img_name = $name_gen . '.' . $img_ext;
-//         // $upload_location = 'image/brand/'; // inside public directory
-//         // $last_img = $upload_location . $img_name;
-//         // $brand_image->move($upload_location, $img_name);
-//         // $brand->logo = $last_img;
 
-//         // with Intervention/image pacakge
-//         $name_gen = hexdec(uniqid()) . '.' . $brand_image->extension();
-//         Image::make($brand_image)->resize(300, 200)->save('image/brand/' . $name_gen);
-//         // Image::make($brand_image)->save('image/brand/' . $name_gen); // not resize
-//         $last_img = 'image/brand/' . $name_gen;
-//         $brand->brand_image = $last_img;
-//     }
 
-//     $brand->brand_name = $request->brand_name;
-//     $brand->save();
+}
 
-//     return Redirect()->back()->with('success', 'Brand successfully created');
-// }
+
+
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'brand_name' => 'required|min:4',
+        'brand_image' => 'mimes:jpg,bmp,png'
+    ]);
+
+     $old_image = $request->old_image;
+    $brand_image = $request->file('brand_image');
+    // if ($old_logo && $brand_image) {
+    //     unlink($old_logo);
+    // }
+
+     $brand = Brand::find($id);
+
+    if ($brand_image) {
+        $name_gen = hexdec(uniqid());
+        $img_ext = strtolower($brand_image->getClientOriginalExtension());
+        $img_name = $name_gen . '.' . $img_ext;
+        $upload_location = 'image/brand/'; // inside public directory
+        $last_img = $upload_location . $img_name;
+        $brand_image->move($upload_location, $img_name);
+
+
+        unlink($old_image);
+        Brand::find($id)->update([
+            'brand_name' => $request->brand_name,
+            'brand_image' => $last_img,
+            'created_at' =>Carbon::now(),
+        ]);
+
+        return Redirect()->back()->with('success', 'Brand successfully updated');
+
+    } else {
+
+        Brand::find($id)->update([
+            'brand_name' => $request->name
+        ]);
+
+        return Redirect()->back()->with('success', 'Brand successfully updated');
+    }
+
+    // return Redirect()->back()->with('success', 'Brand successfully updated');
+}
+
+
+
+public function delete($id){
+
+
+    $image = Brand::find($id);
+
+
+    $old_image =$image->brand_image;
+
+    unlink($old_image);
+
+
+
+    Brand::find($id)->delete($id);
+
+    return Redirect()->back()->with('success', 'Brand deleted successfully ');
+
+
+
+}
+
+
+
+
+
+
+
 
 
 
