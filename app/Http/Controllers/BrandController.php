@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Multipic;
 use Illuminate\Http\Request;
 
 use App\Models\Brand;
 
 use Illuminate\support\Carbon;
 
+use Image;
 
 class BrandController extends Controller
 {
@@ -46,16 +47,24 @@ public function Storebrand(Request $request){
 
 
     $brand_image = $request->file('brand_image');
-    $name_gen = hexdec(uniqid());
 
-    $img_ext = strtolower($brand_image->getClientOriginalExtension());
-     $img_name = $name_gen . '.' . $img_ext;
 
-     $upload_location = 'image/brand/';
+    // $img_ext = strtolower($brand_image->getClientOriginalExtension());
+    //  $img_name = $name_gen . '.' . $img_ext;
 
-     $last_img = $upload_location . $img_name;
+    //  $upload_location = 'image/brand/';
 
-     $brand_image->move($upload_location,$img_name);
+    //  $last_img = $upload_location . $img_name;
+
+    //  $brand_image->move($upload_location,$img_name);
+
+
+    $name_gen = hexdec(uniqid()) . '.' . $brand_image->extension();
+    Image::make($brand_image)->resize(300, 200)->save('image/brand/' . $name_gen);
+
+    $last_img = 'image/brand/' . $name_gen;
+
+
 
 
 
@@ -162,7 +171,70 @@ public function delete($id){
 
 
 
+public function Multipic(){
 
+    $images =Multipic::all();
+
+return view('admin.multi.index',compact('images'));
+
+
+
+
+}
+
+
+
+public function Multiadd(Request $request){
+
+
+
+    $image = $request->file('image');
+
+foreach($image as $multi_image)
+
+{
+
+
+
+
+
+    $name_gen = hexdec(uniqid()) . '.' . $multi_image->extension();
+    Image::make($multi_image)->resize(300, 200)->save('image/multi/' . $name_gen);
+
+    $last_img = 'image/multi/' . $name_gen;
+
+
+
+
+
+
+
+
+     Multipic::insert([
+
+
+
+'image'=>    $last_img,
+
+'created_at'=>Carbon::now(),
+
+     ]);
+    }; //foreach end
+
+     return Redirect()->back()->with('success','mult images file is inserted   in database');
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
 
