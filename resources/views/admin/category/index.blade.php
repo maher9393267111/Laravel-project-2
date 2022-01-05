@@ -79,6 +79,10 @@ Category
 
 
 
+
+
+
+
 </div>
 
 {{-- left secton end --}}
@@ -121,6 +125,56 @@ Category
 </div>
 
 {{-- row --}}
+
+
+
+
+
+{{--
+trashed section here --}}
+
+
+
+
+<hr >
+
+<div class="card">
+  <div class="card-header">
+    Trashed
+  </div>
+  <div class="card-body">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Name</th>
+            <th scope="col">User</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <!-- @php($i = 1) -->
+            @foreach($trashed_categories as $category)
+                <tr>
+                    <!-- <th scope="row">{{ $i++ }}</th> -->
+                    <th scope="row">{{ $trashed_categories->firstItem()+$loop->index }}</th>
+                    <td>{{$category->name}}</td>
+                    <td>{{$category->user->name}}</td>
+                    <td>{{ Carbon\Carbon::parse($category->created_at)->diffForHumans()}}</td>
+                    <td>
+                      <a href="{{ url('category/restore/'.$category->id) }}" class="btn btn-info">Restore</a>
+                      <a href="{{ url('category/delete/'.$category->id) }}" class="btn btn-info">Permanetly Delete</a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+      </table>
+      {{ $trashed_categories->links() }}
+
+
+
+
 
             </div>
 

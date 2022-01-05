@@ -45,3 +45,15 @@ Route::get('category/edit/{id}',[CategoryController::class,'Edit']);
 
 
 Route::post('category/update/{id}',[CategoryController::class,'Update']);
+
+
+Route::get('category/softDelete/{id}',[CategoryController::class,'Softdelete']);
+
+
+
+Route::get('category/restore/{id}',[CategoryController::class,'Restore']);
+
+
+
+
+Route::get('category/delete/{id}',[CategoryController::class,'Delete']);

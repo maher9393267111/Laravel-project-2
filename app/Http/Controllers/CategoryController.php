@@ -30,9 +30,9 @@ $categories = Category::latest()->paginate(5);
 
 // $categories =DB::table('categories')->latest()->paginate(5);
 
+$trashed_categories = category::onlyTrashed()->latest()->paginate(3);
 
-
-return view('admin.category.index',compact('categories'));
+return view('admin.category.index',compact('categories','trashed_categories'));
 
 
 
@@ -140,6 +140,40 @@ return view('admin.category.edit',compact('categories'));
 
 
     }
+
+
+public function Softdelete($id){
+
+
+$categories =category::find($id)->delete();
+
+
+return Redirect()->back()->with('success','the item is deleted successfully');
+
+}
+
+
+public function Restore($id){
+
+$restore =category::withTrashed()->find($id)->restore();
+
+
+return Redirect()->back()->with('success','the table is restored successfully');
+
+
+
+}
+
+
+
+public function Delete($id){
+
+$pdelete =category::onlyTrashed()->find($id)->forceDelete();
+
+    return Redirect()->back()->with('success','the table is deleted for ever successfully');
+
+
+}
 
 
 
