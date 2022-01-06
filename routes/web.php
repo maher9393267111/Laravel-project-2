@@ -82,3 +82,9 @@ Route::get('multi/pic',[BrandController::class,'Multipic'])->name('multi.pic');
 
 
 Route::post('multi/add',[BrandController::class,'Multiadd'])->name('store.image');
+
+
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');

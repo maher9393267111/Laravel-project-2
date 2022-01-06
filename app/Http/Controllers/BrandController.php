@@ -14,6 +14,18 @@ class BrandController extends Controller
 {
 
 
+
+//middlware auth
+
+
+public function __construct()
+{
+    $this->middleware('auth');
+}
+
+
+
+
 public function Allbrand(){
 
 $brands = Brand::latest()->paginate(5);
